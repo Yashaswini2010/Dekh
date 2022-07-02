@@ -1,0 +1,19 @@
+def extract_features(directory):
+       model = Xception( include_top=False, pooling='avg' )
+       features = {}
+for pic in tqdm(os.listdir(dirc)):
+           file = dirc + "/" + pic
+           image = Image.open(file)
+           image = image.resize((299,299))
+           image = np.expand_dims(image, axis=0)
+          #image = preprocess_input(image)
+           image = image/127.5
+           image = image - 1.0
+           feature = model.predict(image)
+           features[img] = feature
+return features
+#2048 feature vector
+features = extract_features(dataset_images)
+pickle.dump(features, open("/home/naruto/dekh/features.pklz","wb"))
+#to directly load the features from the pickle file.
+features = pickle.load(open("/home/naruto/dekh/features.pklz","rb"))
